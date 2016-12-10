@@ -7,5 +7,7 @@ import playfair
 import adfvgx
 import tilfid
 import dubbleTranspose
-
+clearTxt = ['j','a','g','a','t','e','r']
+nyckel = "skitgubbegillarfarskfisk"
+print playfair.playfair_encrypt(clearTxt,nyckel)
 
