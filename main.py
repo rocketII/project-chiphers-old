@@ -1,5 +1,6 @@
-import adfvgx
+#implement them in order
 import playfair
+import adfvgx
 import tilfid
 import dubbleTranspose
 
