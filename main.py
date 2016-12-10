@@ -8,6 +8,10 @@ import adfvgx
 import tilfid
 import dubbleTranspose
 clearTxt = ['j','a','g','a','t','e','r']
+print clearTxt
 nyckel = "skitgubbegillarfarskfisk"
-print playfair.playfair_encrypt(clearTxt,nyckel)
+encrypted1 = playfair.playfair_encrypt(clearTxt,nyckel,'n')
+print encrypted1
 
+secret =playfair.playfair_decryption(encrypted1,nyckel,'n')
+print secret
