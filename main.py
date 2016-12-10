@@ -27,4 +27,6 @@ length = len(secretStuff)
 print "secret: ",secretStuff
 encryptStuff = adfvgx.adfgvx_encryption(key, secretStuff)
 print "encrypted secret: ",encryptStuff
+revealed = adfvgx.adfgvx_decryption(key, encryptStuff)
+print "message: " , revealed
 print"------------------------------------"
