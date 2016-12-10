@@ -1,20 +1,16 @@
 
-'''
-def obo ():
-    print "test this is obo!"
-    return
 
 def setKey(key):
     "Insert a key containing only the english letters."
     holder = key
     return 1
-'''
+
 # Encryption
 ciphertxt= []
-clearTxt = "goingto"
+clearTxt = ['g','o','i','n','g','t','o','b','b']
 nyckel = "skitgubbegillarfarskfisk"
 nyckelLen = len(nyckel)
-print "length: ", len(nyckel)
+#print "length: ", len(nyckel)
 #Create 2D list. Enter key with removed duplicate letters, row by row across columns
 col1=[None] *5
 col2=[None] *5
@@ -42,7 +38,7 @@ for read in nyckel:
 english = ['a','b','c','d','e','f','g','h','i','k','l','m','n','o','p','q','r','s','t','u','v','w','x','z','y']
 
 for read in english:
-    print read, " occours: ", tmp.count(read)
+    #print read, " occours: ", tmp.count(read)
     if tmp[0].count(read) + tmp[1].count(read) + tmp[2].count(read) + tmp[3].count(read) + tmp[4].count(read) == 0:
         #print read, " is unique in nyckel, result: ", tmp.count(read)
         tmp[col][row] = read
@@ -52,15 +48,26 @@ for read in english:
     else:
         sc = tmp[0].count(read) + tmp[1].count(read) + tmp[2].count(read) + tmp[3].count(read) + tmp[4].count(read) == 0
         #print read, " nope!! not unique: ", sc
-
+# create bigrams of clear text. no bigram using samme letter allowed insert junk letter 'n' between
+previous = None; second = 0; junk = 'n'
+for read in clearTxt:
+    if previous == read:
+        clearTxt.insert(second, junk)
+        second +=1
+        previous=junk
+        continue
+    previous = read
+    second += 1
+print "bigram: " , clearTxt
 row = 0; col = 0
 
-'''#reads 2D list with row by row across all the columns.
+#reads 2D list with row by row across all the columns.
 output= []
 for row in range(5):
     for col in range(5):
         read = tmp[col][row]
         if read != None:
             output.append(read,)
-print output
-'''
+#print output
+
+
