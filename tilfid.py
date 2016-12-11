@@ -33,15 +33,21 @@ def tilfid_encryption (secret_Stuff):
     #rowByrow = [None] * secretLength
     trigram = [None] * 3   # trgigram = [layer, col, row] *3
     ci =0;ri = 0; j = 0
-    for round in range(secretLength):
-            trigram[0] = encrypted_tmp[ci][ri] # insert layer   : 1
+    print "          lay,row,col:"
+    for round in range(secretLength): # bug here?  Yes row didn't change when required. now fixed
+            trigram[0] = encrypted_tmp[ci][ri] # insert layer   : 2
             ci = (ci + 1) % secretLength;
+            if ci == 0:
+                ri = (ri + 1) % 3
             trigram[1] = encrypted_tmp[ci][ri] #insert row      : 1
             ci = (ci + 1) % secretLength;
-            trigram[2] = encrypted_tmp[ci][ri] #insert col      : 1
+            if ci == 0:
+                ri = (ri + 1) % 3
+            trigram[2] = encrypted_tmp[ci][ri] #insert col      : 0
             ci = (ci + 1) % secretLength
             if ci == 0:
                 ri = (ri + 1) % 3
+
             print "Trigram: ",trigram
             #                        layer        col         row
             encrypted.append(master[trigram[0]][trigram[2]][trigram[1]])
@@ -93,8 +99,12 @@ def tilfid_decryption(encryptionText):
     for round in range(phraseLength):
                     tmp[0] = decrypted_tmp[o][p]
                     p = (p + 1) % 3
+                    if p % 3 == 0:
+                        o = (o + 1) % phraseLength
                     tmp[1] = decrypted_tmp[o][p]
                     p = (p + 1) % 3
+                    if p % 3 == 0:
+                        o = (o + 1) % phraseLength
                     tmp[2] = decrypted_tmp[o][p]
                     p = (p + 1) % 3
                     if p % 3 == 0:

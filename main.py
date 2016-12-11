@@ -34,7 +34,9 @@ print "Decrypted message: " , revealed
 print"------------------------------------"
 print "Demo Tilfid"
 print"------------------------------------"
-swane = ['b','u','r','k','o',]
+#Bug works using length 3 and 6 not 9 though
+# Guess encryption fails during reading row by row over columns
+swane = ['b','u','r','k']
 print "Secret message: ", swane
 cloud = tilfid.tilfid_encryption(swane)
 print "Encrypted message", cloud
