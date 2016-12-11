@@ -37,9 +37,13 @@ print"------------------------------------"
 #Bug001: works using length 3 and 6 not 9 though
 #length affects how many operations needed before changing row, fixed problem with duplicating if statement.
 #Bug002: After length eleven it dosen't work.
-swane = ['b', 'u', 'r', 'k', 'a', 'r', 'a', 'k', 'e', 'g', 'e', 'e']
+swane = ['b', 'u', 'r', 'k', 'a', 'r', 'a', 'k', 'e', 'g', 'e'] # when above 11 we get bug 002
 print "Secret message:       ", swane," length: ", len(swane)
 cloud = tilfid.tilfid_encryption(swane)
 print "Encrypted message     ", cloud
 print "Decrypted encryption: ",tilfid.tilfid_decryption(cloud)
+print"------------------------------------"
+print "Demo Dubble Transpose"
+print"------------------------------------"
+dubbleTranspose.deb()
 print"------------------------------------"
