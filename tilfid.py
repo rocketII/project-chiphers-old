@@ -28,7 +28,7 @@ def tilfid_encryption (secret_Stuff):
                             encrypted_tmp[i][0] = layer
                             encrypted_tmp[i][1] = row
                             encrypted_tmp[i][2] = col
-
+    print "Encoded as: ",encrypted_tmp
     # read row by row, trigram gets encoded and saved.
     #rowByrow = [None] * secretLength
     trigram = [None] * 3   # trgigram = [layer, col, row] *3
@@ -42,8 +42,64 @@ def tilfid_encryption (secret_Stuff):
             ci = (ci + 1) % secretLength
             if ci == 0:
                 ri = (ri + 1) % 3
+            print "Trigram: ",trigram
             #                        layer        col         row
             encrypted.append(master[trigram[0]][trigram[2]][trigram[1]])
 
     del secret, secretLength
     return encrypted
+
+def tilfid_decryption(encryptionText):
+    '''
+    Decrypt Tilfid encryption message, make sure that the layers are the same as sender's, also make sure
+    that coordinates are working as layer, row, col otherwise change the code.
+    :param encryptionText: Enter the secret phrase as list ['s','e','c','r','e','t']
+    :return: secret message as list
+    '''
+    # Using coordinates layer,row, col
+    # Make sure that booth recipient and sender got the same layers like below. Modify when required.
+
+    layer1 = [['a', 'k', 'g'], ['l', 'r', 't'], ['x', 'm', 'n']]
+    layer2 = [['q', 'w', 'm'], ['!', 'o', 'e'], ['u', 's', 'z']]
+    layer3 = [['i', 'f', 'v'], ['j', 'p', 'd'], ['b', 'h', 'c']]
+    master = [layer1, layer2, layer3]
+    message =[]
+    phrase = encryptionText
+    phraseLength = len(phrase)
+    decrypted_tmp = []
+    for w in range(phraseLength):
+        decrypted_tmp.append([None,None,None]) # [layer, col, row]
+
+
+    # letter by letter read and encode using master and secret
+    r=0; c = 0
+    for round in range(phraseLength):
+        for layer in range(3):
+            for col in range(3):
+                for row in range(3):
+                    # sorry this is totally quadratic time complexity x^4... when there's time I should make it better, hashtable or something
+                    if master[layer][col][row] == phrase[round]:
+                        print "Master: ", master[layer][col][row]
+                        decrypted_tmp[c][r] = layer
+                        c = (c + 1) % phraseLength
+                        decrypted_tmp[c][r] = row
+                        c = (c + 1) % phraseLength
+                        decrypted_tmp[c][r] = col
+                        c = (c + 1) % phraseLength
+                        if c  == 0:
+                            r = (r + 1) % 3
+    # read column by column and decode
+    tmp = [None, None, None]; o = 0; p = 0
+    for round in range(phraseLength):
+                    tmp[0] = decrypted_tmp[o][p]
+                    p = (p + 1) % 3
+                    tmp[1] = decrypted_tmp[o][p]
+                    p = (p + 1) % 3
+                    tmp[2] = decrypted_tmp[o][p]
+                    p = (p + 1) % 3
+                    if p % 3 == 0:
+                        o = (o + 1) % phraseLength
+                    message.append(master[tmp[0]][tmp[2]][tmp[1]])
+
+
+    return message

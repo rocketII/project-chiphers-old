@@ -34,6 +34,9 @@ print "Decrypted message: " , revealed
 print"------------------------------------"
 print "Demo Tilfid"
 print"------------------------------------"
-print "Secret message: \"secret\""
-print "Encrypted message",tilfid.tilfid_encryption("secret")
+swane = ['b','u','r','k','o',]
+print "Secret message: ", swane
+cloud = tilfid.tilfid_encryption(swane)
+print "Encrypted message", cloud
+print "Decrypted encryption: ",tilfid.tilfid_decryption(cloud)
 print"------------------------------------"
