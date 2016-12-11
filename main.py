@@ -34,5 +34,6 @@ print "Decrypted message: " , revealed
 print"------------------------------------"
 print "Demo Tilfid"
 print"------------------------------------"
-tilfid.tilfid_encryption("secret")
+print "Secret message: \"secret\""
+print "Encrypted message",tilfid.tilfid_encryption("secret")
 print"------------------------------------"
