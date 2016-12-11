@@ -34,11 +34,12 @@ print "Decrypted message: " , revealed
 print"------------------------------------"
 print "Demo Tilfid"
 print"------------------------------------"
-#Bug works using length 3 and 6 not 9 though
-# Guess encryption fails during reading row by row over columns
-swane = ['b','u','r','k']
-print "Secret message: ", swane
+#Bug001: works using length 3 and 6 not 9 though
+#length affects how many operations needed before changing row, fixed problem with duplicating if statement.
+#Bug002: After length eleven it dosen't work.
+swane = ['b', 'u', 'r', 'k', 'a', 'r', 'a', 'k', 'e', 'g', 'e', 'e']
+print "Secret message:       ", swane," length: ", len(swane)
 cloud = tilfid.tilfid_encryption(swane)
-print "Encrypted message", cloud
+print "Encrypted message     ", cloud
 print "Decrypted encryption: ",tilfid.tilfid_decryption(cloud)
 print"------------------------------------"
