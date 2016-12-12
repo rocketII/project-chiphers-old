@@ -1,3 +1,4 @@
+# encoding: utf-8
 def deb ():
     print ".deb files goes meh! So dependant"
     return
@@ -10,8 +11,18 @@ def dubbleTransposse_encryption(): # (key, secret):
     :return: gibberish whitch require decryption in order to read
     '''
     #calc nr of filled rows, nr of empty row slots and nr of col.
+
+    '''
+index :      1-n
+ "    -------------------
+ 0    |  col header     |
+ -    -------------------
+ 1-n  | rows of data    |
+      -------------------
+       row 0  contain col header used for sorting and arrenging columns.
+    '''
     encyptionList = ['-1']
-    keyHold = "abcde" #key
+    keyHold = "abcdefghijklmno" #key
     keyLength = len(keyHold)
     cache = "abcdefghijk" # secret
     cacheLength = len(cache)
@@ -23,9 +34,13 @@ def dubbleTransposse_encryption(): # (key, secret):
     # Generate empty 2D list with n rows and m col.
     master = []
     for i in range(keyLength):
-        master.insert(0 , [])
-    for j in range((numberOfElements)):
-        master[(j % keyLength)].append('-1')
+        master.insert(0, [])
+    for j in range((numberOfElements+1)):
+        if j == 0:
+            for p in range(keyLength):
+                master[p].append(keyHold[p])
+        else:
+            master[(j % keyLength)].append('-1')
     master
     print master
 
@@ -38,7 +53,7 @@ def dubbleTransposse_encryption(): # (key, secret):
             row = (row + 1) % Fullrows
 
     # Sort the 2D list columns chronological with a as the lowest at the left side.
-
+    
     # Read col for col where we skip 'special char None or -1' into the encryption list/string and return result
     row = 0; col = 0
     for e in range(numberOfElements):
@@ -50,7 +65,22 @@ def dubbleTransposse_encryption(): # (key, secret):
     encyptionList.reverse()
     encyptionList.remove('-1')
     return 0
-
+'''     Ändra kolumner
+krav:
+    * two identiska tmp columner som motsvarar 2D listans kolumner
+    * nrOfRows nrOfCol
+for a in range(5):  # range is nrOfCol
+    for b in range(5): # range is nrOfCol
+        if cheatSheat[a] == TwoD[b][0]:
+            for f in range(3): # range depends on nr of rows
+                tmpCol[0][f] = TwoD[a][f]
+                tmp2Col[0][f] = TwoD[b][f]
+                # copy a col into tmpCol, copy e col into tmp2Col
+                #Now tmpCol overwrite e col
+                TwoD[b][f] = tmpCol[0][f]
+                #Now tmp2Col overwrite a col
+                TwoD[a][f] = tmp2Col[0][f]
+'''
 def dubbleTransposse_decryption(): # (key, encrypted_text)
     # calc nr of filled rows, nr of empty row slots and nr of col.
 

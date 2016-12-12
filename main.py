@@ -1,3 +1,4 @@
+# encoding: utf-8
 #implement them in order
 #Priority   text
 # 1         make one cipher work at the time
