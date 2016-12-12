@@ -3,7 +3,7 @@ def deb ():
     print ".deb files goes meh! So dependant"
     return
 
-def dubbleTransposse_encryption(): # (key, secret):
+def dubbleTransposse_encryption(key, secret):
     '''
     takes key and secret creates cipher text and encrypt it too then it returns the result
     :param key:
@@ -21,16 +21,20 @@ index :      1-n
       -------------------
        row 0  contain col header used for sorting and arrenging columns.
     '''
+    #retrieve and calc
     encyptionList = ['-1']
-    keyHold = "abcdefghijklmno" #key
-    keyLength = len(keyHold)
-    cache = "abcdefghijk" # secret
+    keyHold = key # try ->  "ab"
+    keyLength = len(keyHold) # makes columns
+    cache = secret # try -> "abcdefghijk"
     cacheLength = len(cache)
     Fullrows = cacheLength / keyLength
     nrOfEmptySpaces = (keyLength -(cacheLength % keyLength))
     if nrOfEmptySpaces > 0:
         Fullrows += 1
     numberOfElements = keyLength * Fullrows
+
+
+
     # Generate empty 2D list with n rows and m col.
     master = []
     for i in range(keyLength):
@@ -41,30 +45,34 @@ index :      1-n
                 master[p].append(keyHold[p])
         else:
             master[(j % keyLength)].append('-1')
-    master
-    print master
+
+    #print master
 
     # Fill 2D list with elements row by row. When empty string apply the rest of empty spaces
-    row = 0; col = 0
-    for h in range((cacheLength)):
+    # the row 0 are only for sorting and column swapping. Never read it as part in encryption message.
+    row = 1; col = 0
+    for h in range(cacheLength):
+
+        if row == 0:
+            row = (row % Fullrows) + 1
         master[col][row] = cache[h]
         col = (col + 1) % keyLength
         if col == 0:
-            row = (row + 1) % Fullrows
+            row = (row % Fullrows) + 1
 
     # Sort the 2D list columns chronological with a as the lowest at the left side.
-    
+    master.sort()
     # Read col for col where we skip 'special char None or -1' into the encryption list/string and return result
-    row = 0; col = 0
+    row = 1; col = 0
     for e in range(numberOfElements):
-        if master[col][row] != '-1':
+        if (master[col][row] != '-1') and row != 0:
             encyptionList.insert(0, master[col][row])
-        row = (row + 1) % Fullrows
-        if row == 0:
+        row = row % Fullrows +1
+        if row == 1:
             col = (col + 1) % keyLength
     encyptionList.reverse()
     encyptionList.remove('-1')
-    return 0
+    return encyptionList
 '''     Ändra kolumner
 krav:
     * two identiska tmp columner som motsvarar 2D listans kolumner
