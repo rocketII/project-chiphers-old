@@ -45,5 +45,5 @@ print "Decrypted encryption: ",tilfid.tilfid_decryption(cloud)
 print"------------------------------------"
 print "Demo Dubble Transpose"
 print"------------------------------------"
-dubbleTranspose.deb()
+print dubbleTranspose.dubbleTransposse_encryption()
 print"------------------------------------"
