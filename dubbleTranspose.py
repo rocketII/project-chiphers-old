@@ -7,7 +7,8 @@ def dubbleTransposse_encryption(key, secret):   #  Tested enough, but not fool p
     '''
     takes key and secret creates cipher text and encrypt it too then it returns the result.
     Remember that dubble encryption require this function twice.
-    :param key: consist of string or list with 1 dimension.
+    :param key: consist of string or list with 1 dimension. And only unique letter becuase dubblicate one krasches the
+                algorithm.
     :param secret: the use of char -1 or -2 is strictly forbidden! If it happens anyway the result should not be trusted
            I trust that the user follows that direction otherwise it's the users fault. Adding the .remove('-2') at the
            begining works bu must be added.
@@ -96,7 +97,8 @@ def dubbleTransposse_decryption(key, encrypted_text):   # got problems length on
     '''
     With key and encrypted text we recreate the secret code.
     Remember that dubble encryption require this function twice.
-    :param key: text string
+    :param key: text string. And only unique letter becuase dubblicate one krasches the
+                algorithm.
     :param encrypted_text:
     :return:
     '''
