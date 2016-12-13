@@ -5,9 +5,12 @@ def deb ():
 
 def dubbleTransposse_encryption(key, secret):
     '''
-    takes key and secret creates cipher text and encrypt it too then it returns the result
-    :param key:
-    :param secret: the use of char -1 is strictly forbidden!
+    takes key and secret creates cipher text and encrypt it too then it returns the result.
+    Remember that dubble encryption require this function twice.
+    :param key: consist of string or list with 1 dimension.
+    :param secret: the use of char -1 or -2 is strictly forbidden! If it happens anyway the result should not be trusted
+           I trust that the user follows that direction otherwise it's the users fault. Adding the .remove('-2') at the
+           begining works bu must be added.
     :return: gibberish whitch require decryption in order to read
     '''
     #calc nr of filled rows, nr of empty row slots and nr of col.
@@ -89,12 +92,19 @@ for a in range(5):  # range is nrOfCol
                 #Now tmp2Col overwrite a col
                 TwoD[a][f] = tmp2Col[0][f]
 '''
-def dubbleTransposse_decryption(): # (key, encrypted_text)
+def dubbleTransposse_decryption(key, encrypted_text):
+    '''
+    With key and encrypted text we recreate the secret code.
+    Remember that dubble encryption require this function twice.
+    :param key:
+    :param encrypted_text:
+    :return:
+    '''
     # calc nr of filled rows, nr of empty row slots and nr of col.
     decryptionList = ['-1']
-    keyHolder = "bac" # default "ab"
+    keyHolder = key # default "ab"
     keyLength = len(keyHolder)  # makes columns
-    encryptedMessg = ['a', 'c', 'e', 'g', 'i', 'k', 'b', 'd', 'f', 'h', 'j'] # should get abcdefghijk as result
+    encryptedMessg = encrypted_text  # default ['a','b','c','d','e','f','g','h','i','j','k']
     encryptedMessgLength = len(encryptedMessg)
     Fullrows = encryptedMessgLength / keyLength  # contains soon total rows exkl row 0
     nrOfEmptySpaces = (keyLength - (encryptedMessgLength % keyLength))
@@ -153,14 +163,14 @@ def dubbleTransposse_decryption(): # (key, encrypted_text)
                         master[b][f] = tmpCol[0][f]
                         # Now tmp2Col overwrite a col
                         master[a][f] = tmp2Col[0][f]
-    # read row by row into Decypted string and return it.
-    row = 1;col = 0
+    # read row by row into Decypted string and return it.   <-------- works but need no tests
+    row1 = 1;col1 = 0
     for e in range(numberOfElements):
-        if (master[col][row] != '-2') and row != 0:
-            decryptionList.insert(0, master[col][row])
-        col = (col % keyLength) + 1
-        if col == 1:
-            row = (row % Fullrows)  + 1
+        if (((master[col1][row1] != '-2') and (row1 != 0) ) and col1 < keyLength):
+            decryptionList.insert(0, master[col1][row1])
+        col1 = ((col1 + 1) % keyLength)
+        if col1 == 0:
+            row1 = (row1 % Fullrows) + 1
     decryptionList.reverse()
     decryptionList.remove('-1')
-    return
+    return decryptionList

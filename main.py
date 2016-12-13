@@ -46,9 +46,10 @@ print "Decrypted encryption: ",tilfid.tilfid_decryption(cloud)
 print"------------------------------------"
 print "Demo Dubble Transpose"
 print"------------------------------------"
-passwd = "abcdefghijk"
+passwd = "juliab"   #"abcdefghijk"
 key = "ab"
 print "From passwd=",passwd," and key=",key
-print "We get encrypted code: ",dubbleTranspose.dubbleTransposse_encryption(key, passwd)
-dubbleTranspose.dubbleTransposse_decryption()
+cloudMyCloud = dubbleTranspose.dubbleTransposse_encryption(key, passwd)
+print "We get encrypted code: ",cloudMyCloud
+print "We get decrypted code: ",dubbleTranspose.dubbleTransposse_decryption(key, cloudMyCloud)
 print"------------------------------------"
