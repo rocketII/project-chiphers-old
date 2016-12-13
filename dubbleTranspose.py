@@ -3,7 +3,7 @@ def deb ():
     print ".deb files goes meh! So dependant"
     return
 
-def dubbleTransposse_encryption(key, secret):
+def dubbleTransposse_encryption(key, secret):   #  Tested enough, but not fool proof, needs to be tested with  different keys and secret
     '''
     takes key and secret creates cipher text and encrypt it too then it returns the result.
     Remember that dubble encryption require this function twice.
@@ -92,14 +92,15 @@ for a in range(5):  # range is nrOfCol
                 #Now tmp2Col overwrite a col
                 TwoD[a][f] = tmp2Col[0][f]
 '''
-def dubbleTransposse_decryption(key, encrypted_text):
+def dubbleTransposse_decryption(key, encrypted_text):   # got problems length on
     '''
     With key and encrypted text we recreate the secret code.
     Remember that dubble encryption require this function twice.
-    :param key:
+    :param key: text string
     :param encrypted_text:
     :return:
     '''
+
     # calc nr of filled rows, nr of empty row slots and nr of col.
     decryptionList = ['-1']
     keyHolder = key # default "ab"
@@ -108,9 +109,10 @@ def dubbleTransposse_decryption(key, encrypted_text):
     encryptedMessgLength = len(encryptedMessg)
     Fullrows = encryptedMessgLength / keyLength  # contains soon total rows exkl row 0
     nrOfEmptySpaces = (keyLength - (encryptedMessgLength % keyLength))
-    if nrOfEmptySpaces > 0:
+    leftover = encryptedMessgLength % keyLength
+    if nrOfEmptySpaces > 0 and leftover > 0:
         Fullrows += 1
-    numberOfElements = keyLength * Fullrows
+    numberOfElements = keyLength * Fullrows # includes empty slots
     # Generate empty 2D list with n rows and m col. (calc nr of rows, keylength == nrOfCol)
     master = []
     for i in range(keyLength):
@@ -124,16 +126,20 @@ def dubbleTransposse_decryption(key, encrypted_text):
     # Mark the loweest row elements from the lowest right col      <--------------------- untill here it works
     countDown = keyLength - 1
     for mark in range(nrOfEmptySpaces):
-        master[countDown][(Fullrows)] = '-2'
-        countDown -= 1
+        if leftover > 0:
+            master[countDown][(Fullrows)] = '-2'
+            countDown -= 1
     # sort the cols alphabetically
     master.sort()
     # Read the elements into the 2D list and jump '-2' spaces. column by column
     row = 1;col = 0
-    for h in range(encryptedMessgLength):
+    for h in range(encryptedMessgLength): # error writes data
 
-        if row == 0 and master[col][row] != '-2':
-            row = (row % Fullrows) + 1
+        if master[col][row] == '-2':
+            row = (row + 1) % Fullrows
+            col = (col + 1) % keyLength
+        elif row == 0 : # never write to row 0 and -2 elements
+            row += 1
         master[col][row] = encryptedMessg[h]
         row = (row % Fullrows) + 1
         if row == 1:
