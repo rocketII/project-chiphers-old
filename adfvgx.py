@@ -1,3 +1,4 @@
+# Oops! I only did half of the chipher... fix it soon.
 def adfgvx_encryption(keyUsing36char, clearTextUsingTheKeyForCoding):
     '''
 
