@@ -34,7 +34,7 @@ print"------------------------------------"
 key= "0n1o2p3q4a5b6c7d8e9rstuvwxyzfghjiklm"
 colKey = "shangrile"
 print "key length: ",len(key)
-secretStuff = ['i','c','a','n','d','r','i','n','k','m','i','l','k']
+secretStuff =  ['i','c','a','n']   # default['i','c','a','n','d','r','i','n','k','m','i','l','k']
 length = len(secretStuff)
 print "secret: ",secretStuff
 encryptStuff = adfvgx.adfgvx_encryption(key, colKey, secretStuff)

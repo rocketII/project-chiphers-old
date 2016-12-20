@@ -111,6 +111,7 @@ def adfgvx_decryption(keyUsing36char, key24transposing, encryptedMessage):
     secret = encryptedMessage
     secretLength = len(encryptedMessage)
     secretII = []
+    toBeDecoded = []
     truth = []
     i = 0
     # generate table with row 0 as header, use ciphertext for calc.
@@ -149,7 +150,41 @@ def adfgvx_decryption(keyUsing36char, key24transposing, encryptedMessage):
                     masterII[col][row] = secret[char]
                     char += 1
     # <---------------------------Move me to the end of the recent working area!!!!!!!
+    # rearrange the columns in order of key
 
+    # swap cols so that the col headers match the key       <------------ works but needs more tests
+    # used to swap columns
+    tmpCol = [['+']];
+    tmp2Col = [['+']]
+    for round in range(Fullrows):
+        tmpCol[0].append('-')
+    for round in range(Fullrows):
+        tmp2Col[0].append('-')
+# look at range.
+    for a in range(key2length):  # range is nrOfCol
+        for b in range(key2length):  # range is nrOfCol
+            if key2[a] == masterII[b][0]:
+                if key2length == 2 and a == 1:
+                    continue
+                elif key2length == 1:
+                    continue
+                else:
+                    for f in range(Fullrows + 1):  # range depends on nr of rows because f walks throug the rows in the columns. +1 with fullrows covers the header row
+                        tmpCol[0][f] = masterII[a][f]
+                        tmp2Col[0][f] = masterII[b][f]
+                        # copy a col into tmpCol, copy e col into tmp2Col
+                        # Now tmpCol overwrite e col
+                        masterII[b][f] = tmpCol[0][f]
+                        # Now tmp2Col overwrite a col
+                        masterII[a][f] = tmp2Col[0][f]
+
+    # read row by row into  toBeDecoded
+
+    for row in range(Fullrows + 1):
+        for col in range(key2length):
+            if masterII[col][row] != '-1' and row != 0:
+                toBeDecoded.append(masterII[col][row])
+    toBeDecoded.remove('-2')
     # fill decode table
     col0 = [None] * 6
     col1 = [None] * 6
@@ -159,20 +194,22 @@ def adfgvx_decryption(keyUsing36char, key24transposing, encryptedMessage):
     col5 = [None] * 6
     master = [col0, col1, col2, col3, col4, col5]
     adfgvx = "adfgvx"
-    col_S = 0; row_S = 0;
+    col_S = 0; row_S = 0; i = 0
     for row in range(0, 6, 1):
         for col in range(0, 6, 1):
             master[col][row] = keyUsing36char[i]
             i += 1
-    del adfgvx, i, j, p
+
+
     # read bigrams and decode
     i = 0; temp=[None,None]
     # we could increase performance by remembering earlier results during decoding.
-    while i < secretLength:
-        temp[0] = secret[i]
+    toBeDecodedLength = len(toBeDecoded)
+    while i < toBeDecodedLength:
+        temp[0] = toBeDecoded[i]
         i += 1
-        if i < secretLength:
-            temp[1] = secret[i]
+        if i < toBeDecodedLength:
+            temp[1] = toBeDecoded[i]
             i += 1
         j = False
         l = 0
