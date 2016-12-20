@@ -102,7 +102,7 @@ def adfgvx_decryption(keyUsing36char, key24transposing, encryptedMessage):
     :param encryptedMessage: the message length % 2 should be 0. If 1 then it's broken.
     :return: Secret
     '''
-    # <---------------------------Move me to the end of the recent working area!!!!!!!
+
     #create chart
     # create 6x6 matrix using lists
     key2 = key24transposing
@@ -129,6 +129,26 @@ def adfgvx_decryption(keyUsing36char, key24transposing, encryptedMessage):
         masterII[p].append(key2[p])
     for j in range((numberOfElements)):
         masterII[(j % key2length)].append('-1')
+    # mark empty slots with -2 from the "lists end" (last row last column) and work on last row
+    countDown2Boom = key2length - 1
+    while nrOfEmptySpaces != 0:
+        masterII[ countDown2Boom ][ Fullrows ] = '-2'
+        nrOfEmptySpaces -= 1
+        countDown2Boom -= 1
+
+    # sort masterII columns by chronological
+
+    masterII.sort()
+    del i, j, nrOfEmptySpaces, p, countDown2Boom # purge <3 !
+    # read the cipher text and fill masterII column by column
+    char = 0
+    while char != secretLength  :
+        for col in range(key2length):
+            for row in range(Fullrows + 1):
+                if masterII[col][row] != '-2' and row != 0:
+                    masterII[col][row] = secret[char]
+                    char += 1
+    # <---------------------------Move me to the end of the recent working area!!!!!!!
 
     # fill decode table
     col0 = [None] * 6

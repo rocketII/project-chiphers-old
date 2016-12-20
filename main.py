@@ -32,7 +32,7 @@ print "Demo ADFVGX"
 print"------------------------------------"
 
 key= "0n1o2p3q4a5b6c7d8e9rstuvwxyzfghjiklm"
-colKey = "shangrila"
+colKey = "shangrile"
 print "key length: ",len(key)
 secretStuff = ['i','c','a','n','d','r','i','n','k','m','i','l','k']
 length = len(secretStuff)
