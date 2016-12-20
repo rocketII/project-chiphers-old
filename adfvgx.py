@@ -77,11 +77,23 @@ def adfgvx_encryption(keyUsing36char, key24transposing , clearTextUsingTheKeyFor
                 row = (row % Fullrows) + 1
     # sort the table headers chronological.
     masterII.sort()
-    # <---------------------------Move me to the end of the recent working area!!!!!!!
+
     # read column for column chronological and then remove -1 from the string. return the result.
-
-    return encrypted
-
+    del h, key24transposing
+    row = 1; col = 0; encryptedII = []
+    for col in range(keylength):
+        for row in range(Fullrows + 1):
+            if masterII[col][row] != '-1' and row != 0:
+                encryptedII.append(masterII[col][row])
+    return encryptedII
+'''
+read row by row from 2D list but not row 0:
+row = 1; col = 0; encryptedII = []
+    for row in range(Fullrows + 1):
+        for col in range(keylength):
+            if masterII[col][row] != '-1' and row != 0:
+                encryptedII.append(masterII[col][row])
+'''
 def adfgvx_decryption(keyUsing36char, key24transposing, encryptedMessage):
     '''
     ADFGVX, decryption
@@ -90,10 +102,35 @@ def adfgvx_decryption(keyUsing36char, key24transposing, encryptedMessage):
     :param encryptedMessage: the message length % 2 should be 0. If 1 then it's broken.
     :return: Secret
     '''
-
+    # <---------------------------Move me to the end of the recent working area!!!!!!!
     #create chart
     # create 6x6 matrix using lists
     key2 = key24transposing
+    key2length = len(key2)
+
+    secret = encryptedMessage
+    secretLength = len(encryptedMessage)
+    secretII = []
+    truth = []
+    i = 0
+    # generate table with row 0 as header, use ciphertext for calc.
+    Fullrows = secretLength / key2length
+    nrOfEmptySpaces = (key2length - (secretLength % key2length))
+    if nrOfEmptySpaces > 0:
+        Fullrows += 1
+    numberOfElements = key2length * Fullrows
+    masterII = []
+    # walksthrough key char by char. and makes columns
+    for i in range(key2length):
+        masterII.insert(0, [])
+    # for every char in the table make the title row filled with key. else fill the table row by row with -1.
+
+    for p in range(key2length):
+        masterII[p].append(key2[p])
+    for j in range((numberOfElements)):
+        masterII[(j % key2length)].append('-1')
+
+    # fill decode table
     col0 = [None] * 6
     col1 = [None] * 6
     col2 = [None] * 6
@@ -102,22 +139,15 @@ def adfgvx_decryption(keyUsing36char, key24transposing, encryptedMessage):
     col5 = [None] * 6
     master = [col0, col1, col2, col3, col4, col5]
     adfgvx = "adfgvx"
-    secret = encryptedMessage
-    secretLength = len(encryptedMessage)
-    truth = []
-    i = 0
     col_S = 0; row_S = 0;
     for row in range(0, 6, 1):
         for col in range(0, 6, 1):
             master[col][row] = keyUsing36char[i]
             i += 1
-
-
-
-
+    del adfgvx, i, j, p
     # read bigrams and decode
     i = 0; temp=[None,None]
-    # we could increase performance by remember earlier results during decoding.
+    # we could increase performance by remembering earlier results during decoding.
     while i < secretLength:
         temp[0] = secret[i]
         i += 1
