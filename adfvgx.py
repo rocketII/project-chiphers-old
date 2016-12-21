@@ -1,4 +1,4 @@
-# Oops! I only did half of the chipher... fix it soon.
+
 def adfgvx_encryption(keyUsing36char, key24transposing , clearTextUsingTheKeyForCoding):
     '''
     ADFGVX famous old cipher, Need more info read some books ;-)
@@ -94,6 +94,7 @@ row = 1; col = 0; encryptedII = []
             if masterII[col][row] != '-1' and row != 0:
                 encryptedII.append(masterII[col][row])
 '''
+# Oops! BUG 003 cipher text with length creates problem on line 217, in adfgvx_decryption
 def adfgvx_decryption(keyUsing36char, key24transposing, encryptedMessage):
     '''
     ADFGVX, decryption
@@ -117,6 +118,7 @@ def adfgvx_decryption(keyUsing36char, key24transposing, encryptedMessage):
     # generate table with row 0 as header, use ciphertext for calc.
     Fullrows = secretLength / key2length
     nrOfEmptySpaces = (key2length - (secretLength % key2length))
+    copyEmptySpaces = nrOfEmptySpaces
     if nrOfEmptySpaces > 0:
         Fullrows += 1
     numberOfElements = key2length * Fullrows
@@ -178,13 +180,14 @@ def adfgvx_decryption(keyUsing36char, key24transposing, encryptedMessage):
                         # Now tmp2Col overwrite a col
                         masterII[a][f] = tmp2Col[0][f]
 
-    # read row by row into  toBeDecoded
+    # read row by row into  toBeDecoded and remove '-2'
 
     for row in range(Fullrows + 1):
         for col in range(key2length):
             if masterII[col][row] != '-1' and row != 0:
                 toBeDecoded.append(masterII[col][row])
-    toBeDecoded.remove('-2')
+    for purge in range(copyEmptySpaces):
+        toBeDecoded.remove('-2')
     # fill decode table
     col0 = [None] * 6
     col1 = [None] * 6
