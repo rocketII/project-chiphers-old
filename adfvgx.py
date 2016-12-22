@@ -1,4 +1,4 @@
-
+# rocketII @ github made this shitty code. Can be used with SMS. :)
 def adfgvx_encryption(keyUsing36char, key24transposing , clearTextUsingTheKeyForCoding):
     '''
     ADFGVX famous old cipher, Need more info read some books ;-)
@@ -87,19 +87,23 @@ def adfgvx_encryption(keyUsing36char, key24transposing , clearTextUsingTheKeyFor
                 encryptedII.append(masterII[col][row])
     return encryptedII
 '''
-read row by row from 2D list but not row 0:
-row = 1; col = 0; encryptedII = []
-    for row in range(Fullrows + 1):
-        for col in range(keylength):
-            if masterII[col][row] != '-1' and row != 0:
-                encryptedII.append(masterII[col][row])
+   ++~~~~~~~~~~~~~~~~~~@@~~~~~~~~~~~~~~~~~++
+   ++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~++
+   ||                                     ||
+   ||                 **                  ||
+   ||                 **                  ||
+   ||                                     ||
+   ++~~~~~~~~~~~~~~~~~~@@~~~~~~~~~~~~~~~~~++
+   ++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~++
+
 '''
 # Oops! BUG 003 cipher text with length creates problem on line 217, in adfgvx_decryption
 def adfgvx_decryption(keyUsing36char, key24transposing, encryptedMessage):
     '''
     ADFGVX, decryption
     :param keyUsing36char: must include 0 to 9 and a to z and shuffle it. Send it as "string"
-    :param key24transposing:
+    :param key24transposing: Because of transposing algorithm evade words with letters that contain copies og chars e.g. shangrila got copies of 'a'.
+           It's possible to add support but this programmer won't do it. Sorry!
     :param encryptedMessage: the message length % 2 should be 0. If 1 then it's broken.
     :return: Secret
     '''

@@ -1,17 +1,20 @@
 def playfair_encrypt(secret, key, junkChar):
+
     '''
     Encrypt using playfair, enter secret followed by key. Notice we handle only lists foo['h','e','l','p']
     English letters only lowercase.
+    :param secret: text string of english letters only,
+    :param key: string of english letters only, thanks.
+    :param junkChar: junkchar fill out betwwen two copies of letters.
+    :return: encrypted text.
     '''
+
     ciphertxt= []
-    #clearTxt = ['j','a','g','a','t','e','r']
     clearTxt = secret
-    #print "ClearTxt: ",clearTxt
-    #nyckel = "skitgubbegillarfarskfisk"
     junk = junkChar
     nyckel = key
     nyckelLen = len(nyckel)
-    #Create 2D list. Enter key with removed duplicate letters, row by row across columns
+    #Create 2D list. Enter key with censored duplicate letters, row by row across columns
     col1=[None] *5
     col2=[None] *5
     col3=[None] *5
@@ -21,18 +24,12 @@ def playfair_encrypt(secret, key, junkChar):
     row=0
     col=0
     for read in nyckel:
-
+        # count(read) make sure no copies are in the column lists.
         if tmp[0].count(read) + tmp[1].count(read) + tmp[2].count(read) + tmp[3].count(read) + tmp[4].count(read) == 0:
-
             tmp[col][row]= read
             col = (col + 1) % 5
             if col == 0:
                 row = (row + 1) % 5
-
-
-
-
-
     #append the rest of the letters in chronologically order
     english = ['a','b','c','d','e','f','g','h','i','k','l','m','n','o','p','q','r','s','t','u','v','w','x','z','y']
 
@@ -46,11 +43,12 @@ def playfair_encrypt(secret, key, junkChar):
                 row = (row + 1) % 5
 
     #print "Table: ",tmp
+    
     # create bigrams of clear text. no bigram using samme letter allowed insert junk letter 'n' between
 
     length = len(clearTxt)
 
-    previous = None; insertAt = 0;
+    previous = None; insertAt = 0
     for read in clearTxt:
         if previous == read:
             clearTxt.insert(insertAt, junk)
@@ -63,7 +61,7 @@ def playfair_encrypt(secret, key, junkChar):
     length = len(clearTxt)
     if length % 2 == 1:
         clearTxt.append(junk)
-    # Find i so that we can replace j with i coordinates
+    # Find 'i' so that we can replace 'j' with 'i' coordinates
     rowFor_i = 0; colFor_i = 0
     for row in range(5):
         for col in range(5):
@@ -72,7 +70,7 @@ def playfair_encrypt(secret, key, junkChar):
                 colFor_i = col
                 #print tmp[col][row]," discovered at col: ",col," row: ",row
 
-    #print "Bigram Source: ",clearTxt
+    # print "Bigram Source: ",clearTxt
     # read two letters from cleartext, use 2D list applie rules. Append result in ouput list
     listlength = len(clearTxt)
     A = 0; rowFor0 = 0; colFor0  = 0; rowFor1 = 0; colFor1  = 0
@@ -101,18 +99,18 @@ def playfair_encrypt(secret, key, junkChar):
                     colFor1 = col
                     #print "round:",A,"row: ", row, "col: ", col, " char: ", tmp[col][row]
         if rowFor0 == rowFor1:
-            #read in order, row/col index 0 goeas first
+            #read in order, row/col index 0 goes first
             ciphertxt.insert(0, tmp[(colFor0 + 1)%5][rowFor0])
             ciphertxt.insert(0, tmp[(colFor1 + 1)%5][rowFor1])
             #print ' '
         elif colFor1 == colFor0:
-            # read in order, row/col index 0 goeas first
+            # read in order, row/col index 0 goes first
             ciphertxt.insert(0, tmp[colFor0][(rowFor0 + 1)%5])
             ciphertxt.insert(0, tmp[colFor1][(rowFor1 + 1)%5])
             #print ' '
         else:
             if colFor0 > colFor1:
-                # read in order, row/col index 0 goeas first
+                # read in order, row/col index 0 goes first
                 colDiff = abs(colFor0 - colFor1)
                 #print "Difference: ", colDiff
                 ciphertxt.insert(0, tmp[(colFor0 - colDiff ) % 5][rowFor0])
@@ -136,7 +134,7 @@ def playfair_encrypt(secret, key, junkChar):
 
 def playfair_decryption(encryptedList, key, junkChar):
     '''
-
+    Playfair changes the order of letters according to rules and sometimes add junk to your secret string. But here we reverse the order.
     :param encryptedList: list with chars
     :param key: word based on the english letter system
     :junkChar: fill out secret in order to create bigrams
@@ -220,6 +218,7 @@ def playfair_decryption(encryptedList, key, junkChar):
                 secret.insert(0, tmp[(colFor1 - colDiff) % 5][rowFor1])
 
     secret.reverse()
-    secret.remove(junkChar)
+    for junk in range(secret.count(junkChar)):
+        secret.remove(junkChar)
 
     return secret

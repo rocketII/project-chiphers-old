@@ -1,3 +1,5 @@
+# code by rocketII on github. use on your own risk.
+#! /path/to/python
 # Bug 002:list with eleven or more characters dosen't work
 def tilfid_encryption (secret_stuff):
     '''
@@ -30,12 +32,14 @@ def tilfid_encryption (secret_stuff):
                             encrypted_tmp[i][1] = row
                             encrypted_tmp[i][2] = col
     #print "Encoded as: ",encrypted_tmp
+
     # read row by row, trigram gets encoded and saved.
+    
     #rowByrow = [None] * secretLength
     trigram = [None] * 3   # trgigram = [layer, col, row] *3
     ci =0;ri = 0; j = 0
     #print "          lay,row,col:"
-    for round in range(secretLength): # bug here?  Yes row didn't change when required. now fixed
+    for round in range(secretLength): # bug here?  Yes row didn't change when required. now fixed?
             trigram[0] = encrypted_tmp[ci][ri] # insert layer   :
             ci = (ci + 1) % secretLength
             if ci == 0:
