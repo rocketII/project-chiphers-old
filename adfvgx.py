@@ -3,7 +3,7 @@ def adfgvx_encryption(keyUsing36char, key24transposing , clearTextUsingTheKeyFor
     '''
     ADFGVX famous old cipher, Need more info read some books ;-)
     :param keyUsing36char: must include 0 to 9 and a to z and shuffle it. Send it as "string"
-    :param key24transposing:
+    :param key24transposing: Algorithm do not support duplicate letters e.g. 'appleseed'. Please don't.
     :param clearTextUsingTheKeyForCoding:  send it as ['s','c','r','e','t']
     :return: encryptet message
     '''
